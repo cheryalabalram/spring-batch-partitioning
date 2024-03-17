@@ -32,6 +32,15 @@ public class EmployeeIdPartitioner implements Partitioner {
         // Calculate total number of records (optional)
         long totalRecords = maxId - minId + 1; // Adjust for gaps if needed
 
+        // Handle a small number of records efficiently
+        if (totalRecords <= 6) {
+            ExecutionContext context = new ExecutionContext();
+            context.putLong("startId", minId);
+            context.putLong("endId", maxId);
+            partitions.put("partition0", context); // Create a single partition
+            return partitions;
+        }
+
         // Calculate ideal partition size (adjust based on data distribution)
         long idealPartitionSize = Math.max(totalRecords / gridSize, 1); // Ensure at least 1 record per partition
 
