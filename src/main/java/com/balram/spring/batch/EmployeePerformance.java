@@ -12,10 +12,10 @@ import org.springframework.data.domain.Persistable;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "EMPLOYEE")
+@Table(name = "EMPLOYEE_PERFORMANCE")
 @Data
 @NoArgsConstructor
-public class Employee implements Persistable<Long>, Serializable {
+public class EmployeePerformance implements Persistable<Long>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public class Employee implements Persistable<Long>, Serializable {
 
 	private String role;
 
-	public Employee(String name, String role) {
+	public EmployeePerformance(String name, String role) {
 		this.name = name;
 		this.role = role;
 	}

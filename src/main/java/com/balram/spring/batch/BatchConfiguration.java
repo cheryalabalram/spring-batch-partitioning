@@ -8,10 +8,8 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
@@ -51,7 +49,7 @@ public class BatchConfiguration {
     @Bean
     public Step slaveStep() {
         return new StepBuilder("slaveStep", jobRepository)
-                .<Employee, Employee>chunk(1000, platformTransactionManager)
+                .<EmployeePerformance, EmployeePerformance>chunk(1000, platformTransactionManager)
                 .reader(employeeItemReader)
                 .writer(employeeItemWriter)
                 .build();

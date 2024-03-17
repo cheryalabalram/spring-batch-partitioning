@@ -5,7 +5,6 @@ import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.partition.support.Partitioner;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -21,14 +20,14 @@ public class EmployeeIdPartitioner implements Partitioner {
     private DataSource dataSource;
 
     @Autowired
-    EmployeeRepo employeeRepo;
+    EmployeePerformanceRepo employeePerformanceRepo;
 
     @Override
     public Map<String, ExecutionContext> partition(int gridSize) {
         Map<String, ExecutionContext> partitions = new HashMap<>();
 
-        Long minId = employeeRepo.min();
-        Long maxId = employeeRepo.max();
+        Long minId = employeePerformanceRepo.min();
+        Long maxId = employeePerformanceRepo.max();
 
         // Calculate total number of records (optional)
         long totalRecords = maxId - minId + 1; // Adjust for gaps if needed

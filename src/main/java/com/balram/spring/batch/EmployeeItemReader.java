@@ -14,14 +14,14 @@ import java.util.List;
 @Component
 @StepScope
 @Slf4j
-public class EmployeeItemReader implements ItemReader<Employee>, ItemStream {
+public class EmployeeItemReader implements ItemReader<EmployeePerformance>, ItemStream {
 
     @Autowired
-    private EmployeeRepo employeeRepo;
+    private EmployeePerformanceRepo employeePerformanceRepo;
 
     private Long startId;
     private Long endId;
-    private Iterator<Employee> employeeIterator;
+    private Iterator<EmployeePerformance> employeeIterator;
 
     @Override
     public void open(ExecutionContext executionContext) {
@@ -29,14 +29,14 @@ public class EmployeeItemReader implements ItemReader<Employee>, ItemStream {
         this.startId = executionContext.getLong("startId");
         this.endId = executionContext.getLong("endId");
 
-        // Fetch employees within the assigned partition range
-        List<Employee> employees = employeeRepo.findByIdBetween(startId, endId);
-        this.employeeIterator = employees.iterator();
+        // Fetch employeePerformances within the assigned partition range
+        List<EmployeePerformance> employeePerformances = employeePerformanceRepo.findByIdBetween(startId, endId);
+        this.employeeIterator = employeePerformances.iterator();
         log.info("Called By startId {}", startId);
     }
 
     @Override
-    public Employee read() {
+    public EmployeePerformance read() {
         if (employeeIterator.hasNext()) {
             return employeeIterator.next();
         }
