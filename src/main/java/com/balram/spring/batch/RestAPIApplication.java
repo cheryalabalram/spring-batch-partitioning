@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
+
 @RestController
 @SpringBootApplication
 @EnableJpaRepositories
@@ -20,6 +22,9 @@ public class RestAPIApplication {
 
     @Autowired
     JobLauncher jobLauncher;
+
+    @Autowired
+    EmployeePerformanceRepo employeePerformanceRepo;
 
     @GetMapping(value = "run")
     @SneakyThrows
@@ -32,6 +37,13 @@ public class RestAPIApplication {
 
         BatchStatus batchStatus = jobExecution.getStatus();
         System.out.println("Job Exit Status: " + batchStatus);
+    }
+
+    @PostConstruct
+    public void init(){
+        employeePerformanceRepo.save(new EmployeePerformance("John", "Developer"));
+        employeePerformanceRepo.save(new EmployeePerformance("Jane", "Tester"));
+        employeePerformanceRepo.save(new EmployeePerformance("Doe", "Manager"));
     }
 
     public static void main(String[] args) {

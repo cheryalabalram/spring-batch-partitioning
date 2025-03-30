@@ -28,6 +28,9 @@ public class BatchConfiguration {
     EmployeeItemReader employeeItemReader;
 
     @Autowired
+    EmployeeItemProcessor employeeItemProcessor;
+
+    @Autowired
     EmployeeItemWriter employeeItemWriter;
 
     @Bean
@@ -49,9 +52,11 @@ public class BatchConfiguration {
     @Bean
     public Step slaveStep() {
         return new StepBuilder("slaveStep", jobRepository)
-                .<EmployeePerformance, EmployeePerformance>chunk(1000, platformTransactionManager)
+                .<EmployeePerformance, Employee>chunk(1000, platformTransactionManager)
                 .reader(employeeItemReader)
+                .processor(employeeItemProcessor)
                 .writer(employeeItemWriter)
+                .transactionManager(platformTransactionManager)
                 .build();
     }
 

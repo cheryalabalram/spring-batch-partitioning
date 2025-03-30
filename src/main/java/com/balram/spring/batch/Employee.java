@@ -1,13 +1,9 @@
 package com.balram.spring.batch;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.Persistable;
 
 import java.io.Serializable;
 
@@ -15,32 +11,33 @@ import java.io.Serializable;
 @Table(name = "EMPLOYEE")
 @Data
 @NoArgsConstructor
-public class Employee implements Persistable<Long>, Serializable {
+//public class Employee implements Persistable<Long>, Serializable {
+public class Employee implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private String name;
+    private String name;
 
-	private String role;
+    private String role;
 
-	public Employee(String name, String role) {
-		this.name = name;
-		this.role = role;
-	}
+    public Employee(String name, String role) {
+        this.name = name;
+        this.role = role;
+    }
 
-	// Getters and setters
+    // Getters and setters
 
-	@Override
-	public Long getId() {
-		return id;
-	}
-
-	@Override
-	public boolean isNew() {
-		return id == null;
-	}
+//    @Override
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    @Override
+//    public boolean isNew() {
+//        return id == null;
+//    }
 }
