@@ -1,4 +1,4 @@
-package com.balram.spring.batch;
+package com.balram.spring.entity;
 
 
 import jakarta.persistence.Entity;

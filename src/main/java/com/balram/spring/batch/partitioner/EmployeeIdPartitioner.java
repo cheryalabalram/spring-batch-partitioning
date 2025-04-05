@@ -1,5 +1,6 @@
-package com.balram.spring.batch;
+package com.balram.spring.batch.partitioner;
 
+import com.balram.spring.repository.EmployeePerformanceRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.partition.support.Partitioner;
@@ -7,7 +8,6 @@ import org.springframework.batch.item.ExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,9 +15,6 @@ import java.util.Map;
 @Slf4j
 @StepScope
 public class EmployeeIdPartitioner implements Partitioner {
-
-    @Autowired
-    private DataSource dataSource;
 
     @Autowired
     EmployeePerformanceRepo employeePerformanceRepo;
@@ -28,6 +25,11 @@ public class EmployeeIdPartitioner implements Partitioner {
 
         Long minId = employeePerformanceRepo.min();
         Long maxId = employeePerformanceRepo.max();
+
+        if (minId == null || maxId == null) {
+            log.warn("No records found in the database.");
+            return partitions; // Return empty partitions if no records are found
+        }
 
         // Calculate total number of records (optional)
         long totalRecords = maxId - minId + 1; // Adjust for gaps if needed

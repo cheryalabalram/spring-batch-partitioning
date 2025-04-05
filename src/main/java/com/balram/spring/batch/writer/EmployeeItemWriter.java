@@ -1,5 +1,7 @@
-package com.balram.spring.batch;
+package com.balram.spring.batch.writer;
 
+import com.balram.spring.repository.EmployeeRepo;
+import com.balram.spring.entity.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.Chunk;

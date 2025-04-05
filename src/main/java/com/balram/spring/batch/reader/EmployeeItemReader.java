@@ -1,5 +1,7 @@
-package com.balram.spring.batch;
+package com.balram.spring.batch.reader;
 
+import com.balram.spring.repository.EmployeePerformanceRepo;
+import com.balram.spring.entity.EmployeePerformance;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ExecutionContext;
@@ -32,7 +34,7 @@ public class EmployeeItemReader implements ItemReader<EmployeePerformance>, Item
         // Fetch employeePerformances within the assigned partition range
         List<EmployeePerformance> employeePerformances = employeePerformanceRepo.findByIdBetween(startId, endId);
         this.employeeIterator = employeePerformances.iterator();
-        log.info("Called By startId {}", startId);
+        log.info("Reading employees from ID {} to ID {}", startId, endId);
     }
 
     @Override

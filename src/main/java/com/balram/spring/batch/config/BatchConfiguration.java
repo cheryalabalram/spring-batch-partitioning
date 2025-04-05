@@ -1,5 +1,11 @@
-package com.balram.spring.batch;
+package com.balram.spring.batch.config;
 
+import com.balram.spring.batch.partitioner.EmployeeIdPartitioner;
+import com.balram.spring.batch.processor.EmployeeItemProcessor;
+import com.balram.spring.batch.reader.EmployeeItemReader;
+import com.balram.spring.batch.writer.EmployeeItemWriter;
+import com.balram.spring.entity.Employee;
+import com.balram.spring.entity.EmployeePerformance;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
